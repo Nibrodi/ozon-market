@@ -3,7 +3,7 @@
     <Nav></Nav>
     <Header></Header>
     <main>
-      <Catalog></Catalog>
+      <router-view></router-view>
     </main>
   </div>
 </template>
@@ -11,14 +11,12 @@
 <script>
 import Nav from './components/Nav'
 import Header from './components/Header'
-import Catalog from './components/Catalog'
 
 export default {
   name: 'app',
   components: {
     Nav,
-    Header,
-    Catalog
+    Header
   }
 }
 </script>
