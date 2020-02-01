@@ -1,7 +1,7 @@
 <template>
   <nav class="nav row">
       <div class="col-12 d-flex justify-content-between align-items-center">
-          <a href="#" class="nav__logo"><img src="../assets/images/logo.svg" alt="logo"></a>
+          <a href="#" class="nav__logo"><img src="/images/logo.svg" alt="logo"></a>
           <div class="d-flex">
               <a class="nav__link nav__link_state_active" href="#">Каталог</a>
               <a class="nav__link" href="#">Доставка</a>
@@ -9,7 +9,7 @@
               <a class="nav__link" href="#">Поддержка</a>
           </div>
           <div class="d-flex">
-              <a href="#" class="nav__smile"></a>
+              <a href="#" class="nav__profile"></a>
               <a href="#" class="nav__cart"></a>
               <div class="nav__badge">2</div>
           </div>
@@ -62,16 +62,16 @@ export default {
         }
     }
     &__cart,
-    &__smile {
+    &__profile {
         display: block;
         width: 40px;
         height: 40px;
     }
     &__cart {
-        background: url('../assets/images/cart.svg') center center no-repeat;
+        background: url('/images/cart.svg') center center no-repeat;
     }
-    &__smile {
-        background: url('../assets/images/smile.svg') center center no-repeat;
+    &__profile {
+        background: url('/images/profile.svg') center center no-repeat;
     }
     &__badge {
         position: absolute;

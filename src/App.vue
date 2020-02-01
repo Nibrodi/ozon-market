@@ -2,18 +2,23 @@
   <div id="app" class="container">
     <Nav></Nav>
     <Header></Header>
+    <main>
+      <Catalog></Catalog>
+    </main>
   </div>
 </template>
 
 <script>
 import Nav from './components/Nav'
 import Header from './components/Header'
+import Catalog from './components/Catalog'
 
 export default {
   name: 'app',
   components: {
     Nav,
-    Header
+    Header,
+    Catalog
   }
 }
 </script>
@@ -24,7 +29,7 @@ export default {
 
 @font-face {
   font-family: GTEestiProDisplay;
-  src: url('./assets/fonts/GTEsti.otf');
+  src: url('/fonts/GTEsti.otf');
 }
 
 .container {

@@ -24,7 +24,7 @@ export default {
         color: #001A34;
     }
     &__count {
-        font-family: GTEestiProText;
+        font-family: GTEestiProDisplay;
         font-size: 16px;
         line-height: 20px;
         color: #808D9A;
