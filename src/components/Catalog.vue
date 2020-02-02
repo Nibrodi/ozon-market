@@ -10,27 +10,36 @@ import mock from '../mock-data/Catalog'
 
 export default {
   name: 'Catalog',
-  data: function() {
-      return {
-          items: mock.data
-      }
-  },
-  created: function() {
-    let cart = this.$storage.get('cart', false)
-    if (cart) {
-      cart.forEach((item) => {
-        let find = this.items.find((elem) => elem.id === item.id)
-        if (find) {
-          find.isInCart = true;
-        }
-      });
+  data: function () {
+    return {
+      items: mock.data
     }
-    this.$parent.headerCount = this.items.length
+  },
+  mounted: function () {
+    this.updates();
   },
   methods: {
+    updates() {
+      let cart = this.$storage.get('cart', false)
+      if (cart) {
+        this.items.forEach(item => item.isInCart = false)
+        cart.forEach((item) => {
+          let find = this.items.find((elem) => elem.id === item.id)
+          if (find) {
+            find.isInCart = true;
+          }
+        });
+      }
+      this.$parent.headerCount = this.items.length
+    }
   },
   components: {
-      CatalogItem
+    CatalogItem
+  },
+  watch: {
+    $route() {
+      this.updates()
+    }
   }
 }
 </script>
