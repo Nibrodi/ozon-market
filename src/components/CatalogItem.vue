@@ -13,7 +13,7 @@
           <div class="item__raiting item__raiting_star_1" v-for="raiting in [0, 1, 2, 3, 4, 5]" :key="raiting"></div>
           <div class="item__feedbacks">{{item.feedbacks}}</div>
       </div>
-      <button class="item__button">В корзину</button>
+      <button class="item__button" @click="addToCart()">В корзину</button>
   </div>
 </template>
 
@@ -28,6 +28,9 @@ export default {
     methods: {
         formatPrice: function(price) {
             return (price).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")
+        },
+        addToCart: function() {
+            this.$parent.addToCart(this.item)
         }
     },
     computed: {
@@ -62,14 +65,12 @@ export default {
         left: 0;
         background: #F91155;
         border-radius: 3px;
-        font-family: GTEestiProDisplay;
         font-size: 12px;
         line-height: 20px;
         text-align: center;
         color: #FFFFFF;
     }
     &__price {
-        font-family: GTEestiProDisplay;
         font-size: 20px;
         line-height: 26px;
         color: #001A34;
@@ -78,7 +79,6 @@ export default {
         }
     }
     &__oldPrice {
-        font-family: GTEestiProText;
         margin-left: 4px;
         font-size: 12px;
         line-height: 16px;
@@ -98,7 +98,6 @@ export default {
         }
     }
     &__name {
-        font-family: GTEestiProDisplay;
         font-size: 16px;
         line-height: 20px;
         color: #001A34;
@@ -111,7 +110,6 @@ export default {
         background-size: cover;
     }
     &__feedbacks {
-        font-family: GTEestiProDisplay;
         font-size: 14px;
         line-height: 20px;
         color: #808D9A;
@@ -122,7 +120,6 @@ export default {
         padding: 7px 12px;
         margin: 16px 0 24px;
         border-radius: 3px;
-        font-family: GTEestiProDisplay;
         font-size: 14px;
         line-height: 18px;
         text-align: center;

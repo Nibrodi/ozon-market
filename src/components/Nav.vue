@@ -3,14 +3,14 @@
       <div class="col-12 d-flex justify-content-between align-items-center">
           <a href="#" class="nav__logo"><img src="/images/logo.svg" alt="logo"></a>
           <div class="d-flex">
-              <a class="nav__link nav__link_state_active" href="#">Каталог</a>
+              <router-link class="nav__link nav__link_state_active" to="/catalog">Каталог</router-link>
               <a class="nav__link" href="#">Доставка</a>
               <a class="nav__link" href="#">Оплата</a>
               <a class="nav__link" href="#">Поддержка</a>
           </div>
           <div class="d-flex">
               <a href="#" class="nav__profile"></a>
-              <a href="#" class="nav__cart"></a>
+              <router-link to="/cart" class="nav__cart"></router-link>
               <div class="nav__badge">2</div>
           </div>
       </div>
@@ -29,7 +29,6 @@ export default {
     &__link {
         display: block;
         position: relative;
-        font-family: GTEestiProDisplay;
         font-size: 12px;
         line-height: 16px;
         text-align: center;
@@ -80,7 +79,6 @@ export default {
         border-radius: 8px;
         width: 23px;
         height: 16px;
-        font-family: GTEestiProDisplay;
         font-size: 12px;
         line-height: 16px;
         text-align: center;
