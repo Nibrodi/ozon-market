@@ -16,7 +16,7 @@
                         <div class="cart__itemImg" :style="{'background-image': `url(${item.image})`}"></div>
                         <div class="cart__itemText">{{item.name}}</div>
                     </label>
-                    <div class="cart__itemPrice">{{item.price}} &#8381;</div>
+                    <div class="cart__itemPrice">{{formatPrice(item.price)}} &#8381;</div>
                 </div>
                 <div class="hr"></div>
                 </div>
