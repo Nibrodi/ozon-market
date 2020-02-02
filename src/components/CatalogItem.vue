@@ -10,7 +10,7 @@
       </div>
       <div class="item__name">{{item.name}}</div>
       <div class="item__raitingWrap d-flex">
-          <div class="item__raiting item__raiting_star_1" v-for="raiting in [0, 1, 2, 3, 4, 5]" :key="raiting"></div>
+          <div class="item__raiting" :class="getClassRaiting(raiting)" v-for="raiting in [1,2,3,4,5]" :key="raiting"></div>
           <div class="item__feedbacks">{{item.feedbacks}}</div>
       </div>
       <button class="item__button" @click="addToCart()" :disabled="item.isInCart">В корзину</button>
@@ -24,6 +24,8 @@ export default {
     data: function() {
         return {
         }
+    },
+    created: function() {
     },
     methods: {
         formatPrice: function(price) {
@@ -39,6 +41,14 @@ export default {
             }
             this.item.isInCart = true;
             this.$emit('update-cart')
+        },
+        getClassRaiting: function(number) {
+            let res = {
+                item__raiting_star_1 : this.item.raiting >= number,
+                item__raiting_star_0 : this.item.raiting < (number - 0.5), 
+                item__raiting_star_5 : this.item.raiting === (number - 0.5)
+            }
+            return res
         }
     },
     computed: {
@@ -114,8 +124,18 @@ export default {
     &__raiting {
         width: 16px;
         height: 16px;
-        background: url('/images/star1.svg') center center no-repeat;
-        background-size: cover;
+        &_star_5 {
+            background: url('/images/star05.svg') center center no-repeat;
+            background-size: cover;
+        }
+        &_star_0 {
+            background: url('/images/star0.svg') center center no-repeat;
+            background-size: cover;
+        }
+        &_star_1 {
+            background: url('/images/star1.svg') center center no-repeat;
+            background-size: cover;
+        }
     }
     &__feedbacks {
         font-size: 14px;
