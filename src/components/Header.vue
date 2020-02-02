@@ -10,23 +10,33 @@
 <script>
 export default {
   name: 'Header',
+  props: ['count'],
   data() {
     return {
       header: 'Дом и сад',
-      description: '24 товара'
     }
+  },
+  computed: {
+    description: function() {
+      return `${this.count} товара`
+    }
+  },
+  methods: {
+    setHeader(path) {
+      if (path === '/catalog') {
+        this.header = 'Дом и сад'
+      }
+      if (path === '/cart') {
+        this.header = 'Корзина'
+      }
+    }
+  },
+  mounted: function(){
+    this.setHeader(this.$route.path)
   },
   watch: {
     $route(to) {
-      if (to.path === '/catalog') {
-        this.header = 'Дом и сад'
-        this.description = '24 товара'
-      }
-      if (to.path === '/cart') {
-        this.header = 'Корзина'
-        this.description = '2 товара'
-      }
-      console.log(to)
+      this.setHeader(to.path)
     }
   }
 }

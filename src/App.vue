@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="container">
-    <Nav></Nav>
-    <Header></Header>
+    <Nav :count="count"></Nav>
+    <Header :count="headerCount"></Header>
     <main>
-      <router-view></router-view>
+      <router-view v-on:update-cart="updateNav()"></router-view>
     </main>
   </div>
 </template>
@@ -14,6 +14,23 @@ import Header from './components/Header'
 
 export default {
   name: 'app',
+  data: function() {
+    return {
+      count: 0,
+      headerCount: 0
+    }
+  },
+  methods: {
+    updateNav: function() {
+      let cart = this.$storage.get('cart', false)
+      if (cart) {
+        this.count = cart.length
+      }
+    }
+  },
+  mounted: function() {
+      this.updateNav()
+  },
   components: {
     Nav,
     Header

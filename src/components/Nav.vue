@@ -1,7 +1,7 @@
 <template>
   <nav class="nav row">
       <div class="col-12 d-flex justify-content-between align-items-center">
-          <a href="#" class="nav__logo"><img src="/images/logo.svg" alt="logo"></a>
+          <router-link to="/" class="nav__logo"><img src="/images/logo.svg" alt="logo"></router-link>
           <div class="d-flex">
               <router-link class="nav__link nav__link_state_active" to="/catalog">Каталог</router-link>
               <a class="nav__link" href="#">Доставка</a>
@@ -11,7 +11,7 @@
           <div class="d-flex">
               <a href="#" class="nav__profile"></a>
               <router-link to="/cart" class="nav__cart"></router-link>
-              <div class="nav__badge">2</div>
+              <div class="nav__badge" v-if="count > 0">{{count}}</div>
           </div>
       </div>
   </nav>
@@ -19,7 +19,12 @@
 
 <script>
 export default {
-  name: 'Nav'
+    name: 'Nav',
+    props: ['count'],
+    data: function() {
+        return {
+        }
+    }
 }
 </script>
 

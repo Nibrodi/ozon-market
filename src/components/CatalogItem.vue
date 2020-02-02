@@ -13,7 +13,7 @@
           <div class="item__raiting item__raiting_star_1" v-for="raiting in [0, 1, 2, 3, 4, 5]" :key="raiting"></div>
           <div class="item__feedbacks">{{item.feedbacks}}</div>
       </div>
-      <button class="item__button" @click="addToCart()">В корзину</button>
+      <button class="item__button" @click="addToCart()" :disabled="item.isInCart">В корзину</button>
   </div>
 </template>
 
@@ -30,7 +30,15 @@ export default {
             return (price).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")
         },
         addToCart: function() {
-            this.$parent.addToCart(this.item)
+            let cart = this.$storage.get('cart', false)
+            if (cart) {
+                cart.push(this.item)
+                this.$storage.set('cart', cart)
+            } else {
+                this.$storage.set('cart', [this.item])
+            }
+            this.item.isInCart = true;
+            this.$emit('update-cart')
         }
     },
     computed: {
@@ -128,6 +136,10 @@ export default {
         border: none;
         &:focus {
             outline: none;
+        }
+        &:disabled {
+            background: #F2F3F5;
+            color: #005BFF;
         }
     }
 }

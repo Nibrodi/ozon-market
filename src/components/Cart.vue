@@ -3,36 +3,30 @@
         <div class="col-10">
             <div class="cart__header d-flex justify-content-between">
                 <div class="cart__selectAll">
-                    <input type="checkbox" id="selectAll">
+                    <input type="checkbox" id="selectAll" @change="selectAll()" v-model="isSelectAll">
                     <label for="selectAll">Выбрать все</label>
                 </div>
-                <div class="cart__deleteAll">Удалить выбранное</div>
+                <div class="cart__deleteAll" @click="deleteSelection()">Удалить выбранное</div>
             </div>
             <div class="cart__list">
+                <div v-for="item in cart" :key="item.id">
                 <div class="cart__item d-flex justify-content-between align-items-center">
-                    <label for="1" class="d-flex align-items-center">
-                        <input type="checkbox" id="1">
+                    <label :for="item.id" class="d-flex align-items-center">
+                        <input type="checkbox" :id="item.id" v-model="item.checked" @change="select()">
                         <div class="cart__itemImg"></div>
-                        <div class="cart__itemText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim natus iure a consequuntur eos est placeat ipsum possimus, id nisi numquam repudiandae error fuga neque, autem voluptates inventore illo, fugit laborum maxime molestias repellendus hic cum. Labore similique assumenda omnis temporibus quos! Vitae ipsa repellat consequuntur, possimus voluptatum eaque modi.</div>
+                        <div class="cart__itemText">{{item.name}}</div>
                     </label>
-                    <div class="cart__itemPrice">7500</div>
+                    <div class="cart__itemPrice">{{item.price}} &#8381;</div>
                 </div>
                 <div class="hr"></div>
-                <div class="cart__item d-flex justify-content-between align-items-center">
-                    <label for="1" class="d-flex align-items-center">
-                        <input type="checkbox" id="1">
-                        <div class="cart__itemImg"></div>
-                        <div class="cart__itemText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim natus iure a consequuntur eos est placeat ipsum possimus, id nisi numquam repudiandae error fuga neque, autem voluptates inventore illo, fugit laborum maxime molestias repellendus hic cum. Labore similique assumenda omnis temporibus quos! Vitae ipsa repellat consequuntur, possimus voluptatum eaque modi.</div>
-                    </label>
-                    <div class="cart__itemPrice">75500</div>
                 </div>
             </div>
             <div class="summary">
                 <div class="row">
                     <div class="summary__header col-12">Ваш заказ:</div>
-                    <div class="col-6 summary__text">3 товара на сумму</div><div class="col-6 summary__header text-right">26000</div>
-                    <div class="col-6 summary__text">Cкидка</div><div class="col-6 summary__header summary__header_color_red text-right">-400</div>
-                    <div class="col-6 summary__header">Общая стоимость</div><div class="col-6 summary__header text-right">20000</div>
+                    <div class="col-6 summary__text">{{cart.length}} товара на сумму</div><div class="col-6 summary__header text-right">{{formatPrice(priceItems)}} &#8381;</div>
+                    <div class="col-6 summary__text">Cкидка</div><div class="col-6 summary__header summary__header_color_red text-right">-{{formatPrice(discountItems)}} &#8381;</div>
+                    <div class="col-6 summary__header">Общая стоимость</div><div class="col-6 summary__header text-right">{{formatPrice(summaryPrice)}} &#8381;</div>
                     <div class="col-12 hr"></div>
                     <div class="col-6 summary__text summary__text_color_gray">Доступные способы и время доставки можно выбрать при оформлении заказа</div>
                     <div class="col-6">
@@ -47,7 +41,96 @@
 
 <script>
 export default {
-  name: 'Cart'
+    name: 'Cart',
+    data: function(){
+        return {
+            cart: [],
+            isSelectAll: false
+        }
+    },
+    created: function () {
+        let cart = this.$storage.get('cart', false)
+        if (cart) {
+            this.cart = cart
+        }
+        if (this.$route.path === '/cart') this.$parent.headerCount = this.cart.length
+    },
+    computed: {
+        checkSelectAll: function() {
+            let res = true
+            this.cart.forEach((item) => {
+                if (!item.checked) {
+                    res = false
+                }
+            })
+            return res
+        },
+        priceItems: function() {
+            let sum = 0
+            this.cart.forEach((item) => {
+                sum += item.price
+            })
+            return sum
+        },
+        discountItems: function() {
+            let sum = 0
+            this.cart.forEach((item) => {
+                if (item.discount > 0) {
+                    sum += +this.discountPrice(item)
+                }
+            })
+            return sum
+        },
+        summaryPrice: function() {
+            return this.priceItems - this.discountItems
+        }
+    },
+    methods: {
+        discountPrice: function(item) {
+            return (item.price*item.discount/100).toFixed(2)
+        },
+        formatPrice: function(price) {
+            return (price).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ").replace(/\./, ',')
+        },
+        deleteSelection: function() {
+            let newCart = []
+            this.cart.forEach((item) => {
+                if (!item.checked) {
+                    newCart.push(item)
+                }
+            })
+            let cart = this.$storage.get('cart', false)
+            if (cart) {
+                this.$storage.set('cart', newCart)
+                this.cart = newCart
+                this.isSelectAll = false;
+            }
+            this.$emit('update-cart')
+        },
+        selectAll: function() {
+            this.turnAllSelect(this.isSelectAll)
+        },
+        turnAllSelect: function(state) {
+            let all = true
+            this.cart = this.cart.map((item) => {
+                item.checked = state
+                if (!item.checked) {
+                    all = false
+                }
+                return item
+            })
+            this.isSelectAll = all
+        },
+        select: function() {
+            let all = true
+            this.cart.forEach((item) => {
+                if (!item.checked) {
+                    all = false
+                }
+            })
+            this.isSelectAll = all
+        }
+    }
 }
 </script>
 
@@ -81,6 +164,10 @@ label {
         font-size: 14px;
         line-height: 18px;
         color: #F91155;
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
     }
     &__item {
         padding: 18px 24px;
