@@ -1,6 +1,6 @@
 <template>
   <div class="catalog row">
-      <CatalogItem v-for="item in items" :item="item" :key="item.id"></CatalogItem>
+      <CatalogItem v-for="item in items" :item="item" :key="item.id" v-on:update-cart="$emit('update-cart')"></CatalogItem>
   </div>
 </template>
 
@@ -15,10 +15,19 @@ export default {
           items: mock.data
       }
   },
-  methods: {
-    addToCart: function(item) {
-      this.$parent.addToCart(item)
+  created: function() {
+    let cart = this.$storage.get('cart', false)
+    if (cart) {
+      cart.forEach((item) => {
+        let find = this.items.find((elem) => elem.id === item.id)
+        if (find) {
+          find.isInCart = true;
+        }
+      });
     }
+    this.$parent.headerCount = this.items.length
+  },
+  methods: {
   },
   components: {
       CatalogItem

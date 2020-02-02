@@ -104,7 +104,7 @@ module.exports = {
             id: 11,
             name: "Cтул Lars желтый пластик Ш.48 В.83 Г.56 Вес 5.5кг",
             price: 71358311,
-            discount: 15,
+            discount: 95,
             image: "/images/bitmap@2x-2.jpg",
             isInCart: false,
             raiting: 0,
