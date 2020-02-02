@@ -13,7 +13,7 @@
                 <div class="cart__item d-flex justify-content-between align-items-center">
                     <label :for="item.id" class="d-flex align-items-center">
                         <input type="checkbox" :id="item.id" v-model="item.checked" @change="select()">
-                        <div class="cart__itemImg"></div>
+                        <div class="cart__itemImg" :style="{'background-image': `url(${item.image})`}"></div>
                         <div class="cart__itemText">{{item.name}}</div>
                     </label>
                     <div class="cart__itemPrice">{{item.price}} &#8381;</div>
@@ -176,8 +176,9 @@ label {
         width: 80px;
         height: 80px;
         margin: 8px 16px;
-        background: url('/images/Bitmap@2x-4.jpg') center center no-repeat;
-        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
         flex-shrink: 0;
     }
     &__itemText {
