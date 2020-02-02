@@ -29,7 +29,6 @@ export default {
     &__link {
         display: block;
         position: relative;
-        font-family: GTEestiProDisplay;
         font-size: 12px;
         line-height: 16px;
         text-align: center;
@@ -80,7 +79,6 @@ export default {
         border-radius: 8px;
         width: 23px;
         height: 16px;
-        font-family: GTEestiProDisplay;
         font-size: 12px;
         line-height: 16px;
         text-align: center;

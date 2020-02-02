@@ -15,6 +15,11 @@ export default {
           items: mock.data
       }
   },
+  methods: {
+    addToCart: function(item) {
+      this.$parent.addToCart(item)
+    }
+  },
   components: {
       CatalogItem
   }

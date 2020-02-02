@@ -25,13 +25,9 @@ export default {
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
-@font-face {
-  font-family: GTEestiProDisplay;
-  src: url('/fonts/GTEsti.otf');
-}
-
 .container {
   max-width: 1024px;
   padding: 0 44px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 </style>
