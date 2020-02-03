@@ -105,8 +105,7 @@ export default {
                 this.cart = newCart
                 this.isSelectAll = false;
             }
-            this.$emit('update-cart')
-            this.$parent.headerCount = this.cart.length
+            this.$emit('update-cart', this.cart.length)
         },
         selectAll: function() {
             this.turnAllSelect(this.isSelectAll)

@@ -1,6 +1,6 @@
 <template>
   <div class="catalog row">
-      <CatalogItem v-for="item in items" :item="item" :key="item.id" v-on:update-cart="$emit('update-cart')"></CatalogItem>
+      <CatalogItem v-for="item in items" :item="item" :key="item.id" v-on:update-cart="updateCart()"></CatalogItem>
   </div>
 </template>
 
@@ -30,7 +30,10 @@ export default {
           }
         });
       }
-      this.$parent.headerCount = this.items.length
+      this.updateCart()
+    },
+    updateCart() {
+      this.$emit('update-cart', this.items.length)
     }
   },
   components: {
